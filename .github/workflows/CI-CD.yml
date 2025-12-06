@@ -1,0 +1,29 @@
+name: Build & Push Docker Image
+
+on:
+  push:
+    branches: ["main","dev","qa"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🟦 Validation stage"
+
+  build:
+    runs-on: ubuntu-latest
+    needs: validate 
+    steps:
+      - run: echo "🟧 Build stage"
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build         # next stage after build
+    steps:
+      - run: echo "🟩 Test stage"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test         
+    steps:
+      - run: echo "🟥 Deploy stage"
